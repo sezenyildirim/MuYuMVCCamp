@@ -17,8 +17,7 @@ namespace MuYuMVC.Controllers
         HeadingManager hm = new HeadingManager(new EfHeadingDal());
         public ActionResult Index(int? id)
         {
-            //var categoryvalues = cm.GetAll();
-            //return View(categoryvalues);
+            
             List<SelectListItem> headingcategory = (from x in hm.GetList()
                                                   select new SelectListItem
                                                   {
@@ -37,9 +36,8 @@ namespace MuYuMVC.Controllers
         public ActionResult GetCategoryList()
         {//kategorileri veritabanından alıyoruz
 
-            // var categoryvalues = cm.GetList();//bu metod CategoryManager'dan geliyor
+            
             var categoryvalues = cm.GetAll();
-            // return View(categoryvalues);
             return RedirectToAction("Index");
         }
 
@@ -50,16 +48,16 @@ namespace MuYuMVC.Controllers
         }
 
         [HttpPost]
-        //sayfada butona tıklandığında, herhangi bir şey post edildiğinde çalışır
+    
         public ActionResult AddCategory(Category p)
-        {//cm CategoryManager sınıfından türettiğimiz nesne
+        {
             CategoryValidator cv = new CategoryValidator();
             ValidationResult results = cv.Validate(p);
             if (results.IsValid)
             {
                 cm.CategoryAddBL(p);
                 return RedirectToAction("GetCategoryList");
-                //ekleme işlemini gerçekleştirdikten sonra GetCategoryList'e yönlendir
+               
             }
             else
             {
@@ -77,8 +75,6 @@ namespace MuYuMVC.Controllers
             cm.CategoryDelete(categoryvalue);
             return RedirectToAction("Index");
         }
-        //Güncellenecek bilgilerin güncelleme sayfasına taşınma işlemi
-        //Güncelleme işlemin kendisi
 
         [HttpGet]
         public ActionResult EditCategory(int id)
